@@ -52,19 +52,23 @@ services:
       PHPLDAPADMIN_LDAP_HOSTS: "openldap"
       PHPLDAPADMIN_HTTPS: "false"
     ports:
-      - "8080:80"
+      - "80:8080"
     depends_on:
       - openldap
   auth0-adldap-connector:
-    image: twistedstream/auth0-ad-ldap-connector:6.1.1
     container_name: adldap-connector
+    build:
+      dockerfile: ./Dockerfile
+    image: my_adldap-connector:latest
     environment: 
-      - PROVISIONING_TICKET=https://jv-aia.au.auth0.com/p/ad/Qnmb3guGu2RzlbiVxdqVGXSzcX05rUYu
+      - PROVISIONING_TICKET=https://jv-aia.au.auth0.com/p/ad/SfDztuNqeNZRUS7paxDQrnKaivjz7eth
       - LDAP_URL=ldap://openldap:389
       - LDAP_BASE=dc=example,dc=org
       - LDAP_BIND_USER=cn=admin,dc=example,dc=org
       - LDAP_BIND_PASSWORD=admin
       - LDAP_USER_BY_NAME=(cn={0})
+      - LDAP_SEARCH_GROUPS=(member={0})
+      - LDAP_SEARCH_LIST_GROUPS_QUERY=(objectClass=groupOfNames)
     volumes:
       - certs-data:/opt/auth0-adldap/certs
     depends_on:

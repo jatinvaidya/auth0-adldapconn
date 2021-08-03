@@ -9,14 +9,6 @@
 
 version: 1
 
-# Entry 1: dc=example,dc=org
-dn: dc=example,dc=org
-dc: example
-o: Example Inc.
-objectclass: top
-objectclass: dcObject
-objectclass: organization
-
 # Entry 2: ou=groups,dc=example,dc=org
 dn: ou=groups,dc=example,dc=org
 objectclass: organizationalUnit
